@@ -1,0 +1,132 @@
+﻿@model RegisterModel
+
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="widget-shadow " data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>Kullanıcı Ekle</h4>
+    </div>
+    <div class="form-body">
+        <form class="form-horizontal" asp-controller="User" asp-action="Add" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="col-sm-2 control-label">Ad:</label>
+                <div class="col-sm-9">
+                    <input asp-for="Name" type="text" class="form-control" value="@Model.Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="col-sm-2 control-label">Soyad:</label>
+                <div class="col-sm-9">
+                    <input asp-for="Surname" type="text" class="form-control" value="@Model.Surname">
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="col-sm-2 control-label">Kullanıcı Adı:</label>
+                <div class="col-sm-9">
+                    <input asp-for="UserName" class="form-control" value="@Model.UserName">
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="col-sm-2 control-label">EMail Adresi:</label>
+                <div class="col-sm-9">
+                    <input asp-for="Email" class="form-control" placeholder="Email" value="@Model.Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="col-sm-2 control-label">Password:</label>
+                <div class="col-sm-9">
+                    <input asp-for="Password" class="form-control" placeholder="Password" value="@Model.Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="RePassword" class="col-sm-2 control-label">RePassword:</label>
+                <div class="col-sm-9">
+                    <input asp-for="RePassword" class="form-control" placeholder="RePassword" value="@Model.RePassword">
+                    <span asp-validation-for="RePassword" class="text-danger"></span>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+            <label for="selector1" class="col-sm-2 control-label">Rol</label>
+            <div class="col-sm-9">
+                <select asp-for="RoleId" class="form-control1">
+                    @foreach (var role in Model.Roles)
+                    {
+                        <option value="@role.Id">@role.Name</option>
+                    }
+                </select>
+            </div>
+        </div>*@
+            <div class="form-group">
+                <label for="selector1" class="col-sm-2 control-label">Rol</label>
+                <div class="col-sm-9">
+
+
+                    @foreach (var item in Model.Roles)
+                    {
+
+
+                        <div class="checkbox-inline1">
+
+                            <input type="checkbox"
+                                   name="RoleIds"
+                                   value="@item.Id"
+                                   id="role(@item.Id)">
+                            <label for="role(@item.Id)">
+                                @item.Name
+                            </label>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="selector1" class="col-sm-2 control-label">Bölüm</label>
+                <div class="col-sm-9">
+
+
+                    @foreach (var item in Model.Departments)
+                    {
+
+
+                        <div class="checkbox-inline1">
+
+                            <input type="checkbox"
+                                   name="DepartmentIds"
+                                   value="@item.Id"
+                                   id="department(@item.Id)">
+                            <label for="department(@item.Id)">
+                                @item.Name
+                            </label>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            @*<div class="form-group">
+            <label for="selector1" class="col-sm-2 control-label">Bölüm</label>
+            <div class="col-sm-9">
+                <select asp-for="DepartmentId" class="form-control1">
+                    @foreach (var department in Model.Departments)
+                    {
+                        <option value="@department.Id">@department.Name</option>
+                    }
+                </select>
+            </div>
+        </div>*@
+
+            <div class="col-sm-offset-2"> <button type="submit" class="btn btn-default">Ekle</button> </div>
+        </form>
+    </div>
+</div>
+
+

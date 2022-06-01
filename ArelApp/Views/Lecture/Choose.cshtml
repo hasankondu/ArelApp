@@ -1,0 +1,54 @@
+﻿@model ChoiceViewModel
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form class="form-horizontal" asp-controller="Lecture" asp-action="Choose" method="post">
+
+    @foreach (var lwd in Model.LectureswithDepartment)
+    {
+        <div class="tables">
+            <div class="bs-example widget-shadow" data-example-id="hoverable-table">
+                <h4>@lwd.DepartmentName</h4>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ders Adı</th>
+                            <th>Ders Kodu</th>
+                            <th>Kredi</th>
+                            <th>Seç</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lecture in lwd.Lectures)
+                        {
+                            <tr>
+                                <th scope="row">@lecture.Id</th>
+                                <td>@lecture.Name</td>
+                                <td>@lecture.Code</td>
+                                <td>@lecture.Credit</td>
+                                <td>
+
+                                    <div class="checkbox-inline1">
+
+                                        <input type="checkbox"
+                                               name="LectureIds"
+                                               value="@lecture.Id"
+                                               id="lecture(@lecture.Id)">
+                                        <label for="lecture(@lecture.Id)">
+                                        </label>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-danger btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i>Gönder</button>
+            </div>
+        </div>
+
+    }
+</form>

@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArelApp.UI", "ArelApp\ArelApp.UI.csproj", "{67EE7F79-33B8-4ECF-8684-F3DAA9B7059B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArelApp.Utilities", "ArelApp.Utilities\ArelApp.Utilities.csproj", "{BFC82329-CB32-4E33-8358-89E217E93830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArelApp.Entities", "ArelApp.Entities\ArelApp.Entities.csproj", "{ABD04626-2C47-46FE-806B-CB6A55A50390}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArelApp.DataAccess", "ArelApp.DataAccess\ArelApp.DataAccess.csproj", "{AB0FD842-B0D0-42B9-9BF4-3B5E0A1C81FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArelApp.Core", "ArelApp.Core\ArelApp.Core.csproj", "{07C677C4-0222-4462-A77D-CD17466562E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArelApp.Business", "ArelApp.Business\ArelApp.Business.csproj", "{262D8C2A-0889-4018-A9C8-076DBF95E610}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67EE7F79-33B8-4ECF-8684-F3DAA9B7059B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67EE7F79-33B8-4ECF-8684-F3DAA9B7059B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67EE7F79-33B8-4ECF-8684-F3DAA9B7059B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67EE7F79-33B8-4ECF-8684-F3DAA9B7059B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC82329-CB32-4E33-8358-89E217E93830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC82329-CB32-4E33-8358-89E217E93830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC82329-CB32-4E33-8358-89E217E93830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC82329-CB32-4E33-8358-89E217E93830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABD04626-2C47-46FE-806B-CB6A55A50390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABD04626-2C47-46FE-806B-CB6A55A50390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABD04626-2C47-46FE-806B-CB6A55A50390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABD04626-2C47-46FE-806B-CB6A55A50390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB0FD842-B0D0-42B9-9BF4-3B5E0A1C81FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB0FD842-B0D0-42B9-9BF4-3B5E0A1C81FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB0FD842-B0D0-42B9-9BF4-3B5E0A1C81FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB0FD842-B0D0-42B9-9BF4-3B5E0A1C81FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07C677C4-0222-4462-A77D-CD17466562E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07C677C4-0222-4462-A77D-CD17466562E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07C677C4-0222-4462-A77D-CD17466562E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07C677C4-0222-4462-A77D-CD17466562E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{262D8C2A-0889-4018-A9C8-076DBF95E610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{262D8C2A-0889-4018-A9C8-076DBF95E610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{262D8C2A-0889-4018-A9C8-076DBF95E610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{262D8C2A-0889-4018-A9C8-076DBF95E610}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9931E475-F164-4413-86BC-7F7E29951452}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,36 @@
+﻿@model LectureModel
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="tables">
+    <div class="bs-example widget-shadow" data-example-id="hoverable-table">
+        <h4>Sınav Not Listesi</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ders Adı</th>
+                    <th>Vize Notu</th>
+                    <th>Final Notu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var exam in Model.Exams)
+                {
+                    <tr>
+                        <th scope="row">@exam.ExamId</th>
+                        <td>@exam.Name</td>
+                        <td>@exam.Midterm</td>
+                        <td>@exam.Final</td>
+                        
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

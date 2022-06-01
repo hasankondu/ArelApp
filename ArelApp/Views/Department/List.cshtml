@@ -1,0 +1,44 @@
+﻿@model DepartmentViewModel
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="tables">
+    <div class="bs-example widget-shadow" data-example-id="hoverable-table">
+        <h4>Bölüm Listesi</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Bölüm Adı</th>
+                    <th>Bölüm Kodu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var department in Model.Departments)
+                {
+                <tr>
+                    <th scope="row">@department.Id</th>
+                    <td>@department.Name</td>
+                    <td>@department.Code</td>
+                    <td>
+
+                        <a class="btn btn-warning btn-flat btn-pri" href="/Department/Update/@department.Id"><i class="fa fa-plus" aria-hidden="true"></i>Düzenle</a>
+                        @*</form>*@
+
+                    </td>
+                    <td>
+                        <form action="/Department/Delete" method="post">
+                            <input type="hidden" name="DepartmentId" value="@department.Id" />
+                            <button type="submit" class="btn btn-danger btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i>Kaldır</button>
+
+                        </form>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

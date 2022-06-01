@@ -1,0 +1,50 @@
+﻿@model ExamViewModel
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="tables">
+    <div class="bs-example widget-shadow" data-example-id="hoverable-table">
+        <h4>Sınav Not Listesi</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ders Adı</th>
+                    <th>Vize Notu</th>
+                    <th>Final Notu</th>
+                    <th>Düzenle</th>
+                    <th>Kaldır</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var exam in Model.Exams)
+                {
+                <tr>
+                    <th scope="row">@exam.Id</th>
+                    <td>@exam.Lecture.Name</td>
+                    <td>@exam.Midterm</td>
+                    <td>@exam.Final</td>
+                    <td>
+
+                        <a class="btn btn-warning btn-flat btn-pri" href="/Exam/Update/@exam.Id"><i class="fa fa-plus" aria-hidden="true"></i>Düzenle</a>
+                        @*</form>*@
+
+                    </td>
+                    <td>
+                        <form action="/Exam/Delete" method="post">
+                            <input type="hidden" name="ExamId" value="@exam.Id" />
+                            <button type="submit" class="btn btn-danger btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i>Kaldır</button>
+
+                        </form>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

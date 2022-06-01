@@ -1,0 +1,47 @@
+﻿@model LectureViewModel
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="tables">
+    <div class="bs-example widget-shadow" data-example-id="hoverable-table">
+        <h4>Ders Listesi</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ders Adı</th>
+                    <th>Ders Kodu</th>
+                    <th>Kredi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lecture in Model.Lectures)
+                {
+                <tr>
+                    <th scope="row">@lecture.Id</th>
+                    <td>@lecture.Name</td>
+                    <td>@lecture.Code</td>
+                    <td>@lecture.Credit</td>
+                    <td>
+
+                        <a class="btn btn-warning btn-flat btn-pri" href="/Lecture/Update/@lecture.Id"><i class="fa fa-plus" aria-hidden="true"></i>Düzenle</a>
+                        @*</form>*@
+
+                    </td>
+                    <td>
+                        <form action="/Lecture/Delete" method="post">
+                            <input type="hidden" name="LectureId" value="@lecture.Id" />
+                            <button type="submit" class="btn btn-danger btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i>Kaldır</button>
+
+                        </form>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

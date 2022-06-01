@@ -1,0 +1,84 @@
+﻿@model ApproveModel
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form action="" method="post">
+    <h4>Ders Onayı</h4>
+    @foreach (var item in Model.StudentswithLectures)
+    {
+        if (item.StudentsLectures.Count != 0)
+        {
+            <p> @item.DepartmentName</p>
+            foreach (var student in item.StudentsLectures)
+            {
+
+
+                <div class="tables">
+                    <div class="bs-example widget-shadow" data-example-id="hoverable-table">
+                        <p>@student.StudentName</p>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Ders Adı</th>
+                                    <th>Ders Kodu</th>
+                                    <th>Kredi</th>
+                                    <th>Seç</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var lecture in student.Lectures)
+                                {
+
+                                    <tr>
+
+                                        <th scope="row">@lecture.Id</th>
+                                        <td>@lecture.Name</td>
+                                        <td>@lecture.Code</td>
+                                        <td>@lecture.Credit</td>
+                                        <td>
+
+                                            <div class="checkbox-inline1">
+
+                                                <input type="checkbox"
+                                                       name="LectureIds"
+                                                       value="@lecture.Id"
+                                                       id="lecture(@lecture.Id)">
+                                                <label for="lecture(@lecture.Id)">
+                                                </label>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+
+
+
+
+                        <input type="hidden" name="StudentId" value="@student.StudentId" />
+                        <button type="submit" class="btn btn-danger btn-flat btn-pri" formaction="Approve"><i class="fa fa-plus" aria-hidden="true"></i>Onayla</button>
+
+
+
+
+                        @*<form action="/Lecture/Deny" method="post">
+                                <input type="hidden" name="StudentId" value="@student.StudentId" />
+                                <button type="submit" class="btn btn-danger btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i>Reddet</button>
+
+                            </form>*@
+                    </div>
+                </div>
+
+            }
+        }
+    }
+</form>

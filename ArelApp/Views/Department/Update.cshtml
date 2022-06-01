@@ -1,0 +1,29 @@
+﻿@model DepartmentViewModel
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="widget-shadow " data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>Ders Düzenle</h4>
+    </div>
+    <div class="form-body">
+        <form class="form-horizontal" asp-controller="Department" asp-action="Update" method="post">
+            <input type="hidden" name="DepartmentId" value="@Model.DepartmentId" />
+            <div class="form-group">
+                <label asp-for="Name" class="col-sm-2 control-label">Ders Adı:</label>
+                <div class="col-sm-9">
+                    <input asp-for="Name" value="@Model.Name" type="text" class="form-control" placeholder="Ders Adı" name="Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Ders Kodu:</label>
+                <div class="col-sm-9">
+                    <input asp-for="Code" value="@Model.Code" type="text" class="form-control" placeholder="Ders Kodu" name="Code">
+                </div>
+            </div>
+            <div class="col-sm-offset-2"> <button type="submit" class="btn btn-default">Düzenle</button> </div>
+        </form>
+    </div>
+</div>
