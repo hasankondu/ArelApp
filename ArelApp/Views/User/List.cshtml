@@ -4,47 +4,47 @@
     ViewData["Title"] = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
+    <div class="tables">
+        <div class="bs-example widget-shadow" data-example-id="hoverable-table">
+            <h4>Kullanıcı Listesi</h4>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad</th>
+                        <th>Soyad</th>
+                        <th>Detaylar</th>
+                        <th>Kaldır</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
 
-<div class="tables">
-    <div class="bs-example widget-shadow" data-example-id="hoverable-table">
-        <h4>Kullanıcı Listesi</h4>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Ad</th>
-                    <th>Soyad</th>
-                    <th>Detaylar</th>
-                    <th>Kaldır</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in Model.Users)
-                {
+                        <tr>
 
-                <tr>
+                            <th scope="row">@user.Id</th>
+                            <td>@user.Name</td>
+                            <td>@user.Surname</td>
 
-                    <th scope="row">@user.Id</th>
-                    <td>@user.Name</td>
-                    <td>@user.Surname</td>
+                            <td>
 
-                    <td>
+                                <a class="btn btn-warning btn-flat btn-pri" href="/User/Update/@user.Id"><i class="fa fa-edit" aria-hidden="true"></i>Düzenle</a>
+                                @*</form>*@
 
-                        <a class="btn btn-warning btn-flat btn-pri" href="/User/Update/@user.Id"><i class="fa fa-plus" aria-hidden="true"></i>Detaylar</a>
-                        
+                            </td>
+                            <td>
+                                <form action="/User/Delete" method="post">
+                                    <input type="hidden" name="UserId" value="@user.Id" />
+                                    <button type="submit" class="btn btn-danger btn-flat btn-pri"><i class="fa fa-trash-o" aria-hidden="true"></i>Kaldır</button>
 
-                    </td>
-                    <td>
-                        <form action="/User/Delete" method="post">
-                            <input type="hidden" name="UserId" value="@user.Id" />
-                            <button type="submit" class="btn btn-danger btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i>Kaldır</button>
-
-                        </form>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-

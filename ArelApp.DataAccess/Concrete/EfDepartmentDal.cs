@@ -24,7 +24,10 @@ namespace ArelApp.DataAccess.Concrete
             {
                 return context.Departments
                     .Where(i => i.Id == id)
-                    .Include(i => i.Lectures)
+                    .Include(i=>i.UserDepartments)
+                    .ThenInclude(i=>i.User)
+                    .ThenInclude(i=>i.UserLectures)
+                    .ThenInclude(i => i.Lecture)
                     .FirstOrDefault();
             }
         }

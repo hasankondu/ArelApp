@@ -24,10 +24,6 @@ namespace ArelApp.UI.Models
 
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
         public string NewPassword { get; set; }
 
         public int RoleId { get; set; }

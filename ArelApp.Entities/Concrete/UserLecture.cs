@@ -19,7 +19,8 @@ namespace ArelApp.Entities.Concrete
         Approved = 0,
         Denied = 1,
         Pending = 2,
-        NotSubmitted = 3
+        NotSubmitted = 3,
+        Teaching = 4
 
     }
 }

@@ -4,43 +4,91 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="widget-shadow " data-example-id="basic-forms">
-    <div class="form-title">
-        <h4>Ders Ekle</h4>
-    </div>
-    <div class="form-body">
-        <form class="form-horizontal" asp-controller="Lecture" asp-action="Add">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Ders Adı:</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="Ders Adı" name="Name">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Ders Kodu:</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="Ders Kodu" name="Code">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Kredi: </label>
-                <div class="col-sm-9">
-                    <input type="number" class="form-control" placeholder="Kredi" name="Credit">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="selector1" class="col-sm-2 control-label">Bölüm</label>
-                <div class="col-sm-9">
-                    <select asp-for="DepartmentId" class="form-control1">
-                        @foreach (var department in Model.Departments)
-                        {
-                            <option value="@department.Id">@department.Name</option>
-                        }
-                    </select>
-                </div>
-            </div>
+@*<script src="~/js/jquery-1.11.1.min.js"></script>*@
 
-            <div class="col-sm-offset-2"> <button type="submit" class="btn btn-default">Ekle</button> </div>
-        </form>
+
+<script type="text/javascript">
+
+            $(document).ready(function () {
+                $("#DepartmentList").change(function () {
+                    $("#AcademicianList").empty();
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("LoadAcademicians")',
+
+                        dataType: 'json',
+                        data: { id: $("#DepartmentList").val() },
+                        success: function (academicians) {
+                            $("#AcademicianList").append('<option value="' + -1 + '">' +
+                                "Akademisyen Seç" + '</option>');
+                            $.each(academicians, function (i, academician) {
+                                $("#AcademicianList").append('<option value="' + academician.value + '">' +
+                                    academician.text + '</option>');
+                            });
+                        },
+                        error: function (ex) {
+                            alert('Akademisyenleri getirirken hata.' + ex);
+                        }
+                    });
+                    return false;
+                });
+
+            });
+
+</script>
+
+
+<div class="container">
+    <div class="widget-shadow " data-example-id="basic-forms">
+        <div class="form-title">
+            <h4>Ders Ekle</h4>
+        </div>
+        <div class="form-body">
+            <form class="form-horizontal" asp-controller="Lecture" asp-action="Add">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Ders Adı:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="Ders Adı" name="Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Ders Kodu:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="Ders Kodu" name="Code">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Kredi: </label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" placeholder="Kredi" name="Credit">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selector1" class="col-sm-2 control-label">Bölüm</label>
+                    <div class="col-sm-9">
+                        <select asp-for="DepartmentId" id="DepartmentList" asp-items="ViewBag.Departments" class="form-control1">
+                            <option>Bölüm Seç</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="selector1" class="col-sm-2 control-label">Akademisyen</label>
+                    <div class="col-sm-9">
+                        <select asp-for="UserId" id="AcademicianList" class="form-control1">
+                            <option value="-1">Akademisyen Seç</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="col-sm-offset-2"> <button type="submit" class="btn btn-success btn-flat btn-pri" style="margin-left:300px;"><i class="fa fa-plus" aria-hidden="true"></i>Ekle</button> </div>
+            </form>
+        </div>
     </div>
+
 </div>

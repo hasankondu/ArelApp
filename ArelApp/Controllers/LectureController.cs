@@ -3,10 +3,10 @@ using ArelApp.Entities.Concrete;
 using ArelApp.UI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static ArelApp.Entities.Concrete.UserLecture;
 
 namespace ArelAppAutomation.Controllers
 {
@@ -38,17 +38,24 @@ namespace ArelAppAutomation.Controllers
         }
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
+            var allacademicians = await _userService.GetUsersInRoleAsync("Academician");
+            List<User> academicians = new List<User>();
+            academicians.AddRange(allacademicians);
+
             var model = new LectureViewModel()
             {
-                Departments = _departmentService.List()
+                Departments = _departmentService.List(),
+                Users = academicians,
             };
+
+            ViewBag.Departments = new SelectList(_departmentService.List(), "Id", "Name");
             return View(model);
         }
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult Add(LectureViewModel model)
+        public async Task<IActionResult> Add(LectureViewModel model)
         {
             var entity = new Lecture()
             {
@@ -57,12 +64,33 @@ namespace ArelAppAutomation.Controllers
                 Code = model.Code,
                 DepartmentId = model.DepartmentId
             };
+
+
             _lectureService.Add(entity);
+            var lecture = _lectureService.GetById(entity.Id);
+            var user = await _userService.FindByIdAsync(model.UserId.ToString());
+            _userService.AssignUserToLecture(user, lecture.Id, EnumApprovalStatus.Teaching);
+            var studentsinrole = await _userService.GetUsersInRoleAsync("Student");
+            var students = new List<User>();
+            var departments = _departmentService.List();
+
+            foreach (var item in studentsinrole)
+            {
+                students.AddRange(_userService.GetThatUsersDepartments(item.Id).UserDepartments.Where(i => i.DepartmentId == model.DepartmentId).Select(i=>i.User).ToList());
+            }
+        
+            
+            
+            foreach (var student in students)
+            {
+                _userService.AssignUserToLecture(student, lecture.Id, EnumApprovalStatus.NotSubmitted);
+            }
+
             return RedirectToAction("List");
         }
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult Update(int? id)
+        public async Task<IActionResult> Update(int? id)
         {
             if (id == null)
             {
@@ -71,8 +99,21 @@ namespace ArelAppAutomation.Controllers
 
             var entity = _lectureService.GetById((int)id);
 
+            //var allacademicians = await _userService.GetUsersInRoleAsync("Academician");
+            List<User> academicians = new List<User>();
+            var academician = _lectureService.GetThatLecturesAcademician(entity.Id).UserLectures.Where(i => i.ApprovalStatus == EnumApprovalStatus.Teaching).Select(i=>i.User).FirstOrDefault();
+            var usersindepartment = _userService.GetThatUsersByDepartmentId(entity.DepartmentId);
+            foreach (var user in usersindepartment)
+            {
+                var inrole = await _userService.IsInRoleAsync(user, "Academician");
+                if (inrole == true)
+                {
+                    academicians.Add(user);
+                }
+            }
+          
 
-
+            var departments = _departmentService.List();
             var model = new LectureViewModel()
             {
                 LectureId = entity.Id,
@@ -80,10 +121,15 @@ namespace ArelAppAutomation.Controllers
                 Name = entity.Name,
                 Credit = entity.Credit,
                 DepartmentId = entity.DepartmentId,
-                Departments = _departmentService.List()
+                Departments = departments,
+                Users = academicians,
+                UserId = academician.Id
 
             };
 
+
+            ViewBag.Departments = new SelectList(departments, "Id", "Name");
+            ViewBag.Academicians = new SelectList(academicians, "Id", "Name");
             return View(model);
         }
         [Authorize(Roles = "Admin")]
@@ -100,7 +146,11 @@ namespace ArelAppAutomation.Controllers
             entity.Credit = model.Credit;
             entity.DepartmentId = model.DepartmentId;
 
+            var academician = _lectureService.GetThatLecturesAcademician(entity.Id).UserLectures.Where(i => i.ApprovalStatus == EnumApprovalStatus.Teaching).Select(i => i.User).FirstOrDefault();
+
             _lectureService.Update(entity);
+            _userService.ReAssignAcademicianToLecture(academician, model.UserId,entity.Id, EnumApprovalStatus.Teaching);
+         
             return RedirectToAction("List");
         }
         [Authorize(Roles = "Admin")]
@@ -117,24 +167,7 @@ namespace ArelAppAutomation.Controllers
             return RedirectToAction("List");
         }
 
-        [HttpGet]
-        public IActionResult Result()
-        {
-            var lecture = _lectureService.GetByStudentId(_userService.GetUserId(User));
 
-
-            return View(new LectureModel()
-            {
-                LectureId = lecture.Id,
-                Exams = lecture.Exams.Select(i => new ExamModel()
-                {
-                    ExamId = i.Id,
-                    Midterm = i.Midterm,
-                    Final = i.Final
-                }).ToList()
-            });
-
-        }
 
         //burayi tekrar yap
         [HttpGet]
@@ -182,10 +215,9 @@ namespace ArelAppAutomation.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Approve()
+        public IActionResult Approve()
         {
             var academicianid = _userService.GetUserId(User);
-            var academician = await _userService.FindByIdAsync(academicianid);
             var departments = (_userService.GetThatUsersDepartments(int.Parse(academicianid))).UserDepartments.Select(i => i.Department).ToList();
             var allstudentsinsamedepartment = new List<User>();
 
@@ -234,35 +266,17 @@ namespace ArelAppAutomation.Controllers
         {
 
             var user = await _userService.FindByIdAsync(StudentId.ToString());
-            _userService.UpdateUserLectures(user, LectureIds, EnumApprovalStatus.Pending);
+            _userService.UpdateUserLectures(user, LectureIds, EnumApprovalStatus.Denied);
 
-            return View();
+            return RedirectToAction("Approve");
         }
         //departmana göre de listele
+        //kayıt olurken eğer akademisyense derslerin durumu teaching vb bir şey olsun
+
 
         [HttpGet]
-        public async Task<IActionResult> MyLectures()
+        public IActionResult MyLectures()
         {
-            //var userid = _userService.GetUserId(User);
-            //var user = await _userService.FindByIdAsync(userid);
-            //var roles = await _userService.GetRolesAsync(user);
-            //var departments = _userService.GetThatUsersDepartments(user.Id).UserDepartments.Select(i => i.Department).ToList();
-            //var entity = _userService.GetThatUsersLectures(user.Id);
-            //var model = new MyLecturesModel();
-
-            //foreach (var department in departments)
-            //{
-
-            //    var lecture = new MyLectureViewModel();
-
-            //    lecture.Lectures = entity.UserLectures.Where(i => i.ApprovalStatus == EnumApprovalStatus.Approved).Select(i => i.Lecture).ToList();
-            //    lecture.DepartmentName = department.Name;
-            //    lecture.Relation = "Öğrenimlerim";
-            //    model.LectureswithDepartment.Add(lecture);
-
-            //}
-
-            //return View(model);
             var userid = _userService.GetUserId(User);
             var departments = (_userService.GetThatUsersDepartments(int.Parse(userid))).UserDepartments.Select(i => i.Department).ToList();
             var model = new ChoiceViewModel();
@@ -281,14 +295,53 @@ namespace ArelAppAutomation.Controllers
 
 
                 model.LectureswithDepartment.Add(departmentandtheirlectures);
-
-
             }
-
-
-
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult MyTeachings()
+        {
+            var userid = _userService.GetUserId(User);
+            var departments = (_userService.GetThatUsersDepartments(int.Parse(userid))).UserDepartments.Select(i => i.Department).ToList();
+            var model = new ChoiceViewModel();
+
+            foreach (var department in departments)
+            {
+
+
+                var lectures = new List<Lecture>();
+
+
+                lectures.AddRange(_userService.GetThatUsersLectures(int.Parse(userid)).UserLectures.Where(i => i.ApprovalStatus == (EnumApprovalStatus.Teaching)).Select(i => i.Lecture).Where(i => i.DepartmentId == department.Id).ToList());
+                var departmentandtheirlectures = new LectureChoiceViewModel();
+                departmentandtheirlectures.DepartmentName = department.Name;
+                departmentandtheirlectures.Lectures = lectures;
+
+
+                model.LectureswithDepartment.Add(departmentandtheirlectures);
+            }
+            return View(model);
+        }
+
+        public async Task<JsonResult> LoadAcademicians(int Id)
+        {
+            var academician = new List<User>();
+             var asd=_userService.GetThatUsersByDepartmentId(Id);
+            foreach (var user in asd)
+            {
+                var inrole = await _userService.IsInRoleAsync(user, "Academician");
+                if (inrole==true)
+                {
+                    academician.Add(user);
+                }
+            }
+
+            
+            return Json(new SelectList(academician, "Id", "Name"));
+        }
+
+
 
     }
 }

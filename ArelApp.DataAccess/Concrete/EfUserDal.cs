@@ -31,6 +31,8 @@ namespace ArelApp.DataAccess.Concrete
                     .Where(i => i.Id == id)
                     .Include(i => i.UserDepartments)
                     .ThenInclude(i => i.Department)
+                    .ThenInclude(i=>i.Lectures)
+                    .ThenInclude(i=>i.UserLectures)
                     .FirstOrDefault();
             }
         }
@@ -104,7 +106,7 @@ namespace ArelApp.DataAccess.Concrete
                     {
                         foreach (var item in LectureIds)
                         {
-                            var selected=user.UserLectures.Where(i => i.LectureId == item).Select(i => new UserLecture()
+                            var selected = user.UserLectures.Where(i => i.LectureId == item).Select(i => new UserLecture()
                             {
                                 LectureId = item,
                                 UserId = user.Id,
@@ -128,10 +130,6 @@ namespace ArelApp.DataAccess.Concrete
                     }
 
 
-
-
-
-
                 }
             }
 
@@ -139,6 +137,115 @@ namespace ArelApp.DataAccess.Concrete
 
 
 
+
+        public void AssignUserToLecture(User entity, int LectureId, EnumApprovalStatus approvalStatus)
+        {
+            using (var context = new ArelAppAutomationContext())
+            {
+                var user = context.Users
+                    .Include(i => i.UserLectures)
+                    .FirstOrDefault(i => i.Id == entity.Id);
+                if (user != null)
+                {
+
+
+                    var userlecture = new UserLecture();
+                    userlecture.LectureId = LectureId;
+                    userlecture.UserId = user.Id;
+                    userlecture.ApprovalStatus = approvalStatus;
+
+
+                    var notselected = user.UserLectures.Where(i => i.LectureId != LectureId).ToList();
+
+                    List<UserLecture> userLectures = new List<UserLecture>();
+
+                    userLectures.Add(userlecture);
+
+                    userLectures.AddRange(notselected);
+
+                    user.UserLectures = userLectures;
+
+                    context.SaveChanges();
+
+
+                }
+            }
+
+        }
+
+        public void ReAssignAcademicianToLecture(User oldacademician, int academicianid, int LectureId, EnumApprovalStatus approvalStatus)
+        {
+            using (var context = new ArelAppAutomationContext())
+            {
+                var user = context.Users
+                    .Include(i => i.UserLectures)
+                    .FirstOrDefault(i => i.Id == academicianid);
+                if (user != null)
+                {
+
+
+                    var userlecture = new UserLecture();
+                    userlecture.LectureId = LectureId;
+                    userlecture.UserId = user.Id;
+                    userlecture.ApprovalStatus = approvalStatus;
+
+
+                    var notselected = user.UserLectures.Where(i => i.LectureId != LectureId).ToList();
+
+                    List<UserLecture> userLectures = new List<UserLecture>();
+
+                    userLectures.Add(userlecture);
+
+                    userLectures.AddRange(notselected);
+
+                    user.UserLectures = userLectures;
+
+                    context.SaveChanges();
+
+
+                }
+
+
+                var academician = context.Users
+                    .Include(i => i.UserLectures)
+                    .FirstOrDefault(i => i.Id == oldacademician.Id);
+                if (academician != null)
+                {
+                    var rmvdul = academician.UserLectures.ToList();
+                    rmvdul.Remove(academician.UserLectures.Where(i => i.LectureId == LectureId).FirstOrDefault());
+                    academician.UserLectures = rmvdul;
+                    context.SaveChanges();
+                }
+            }
+
+        }
+
+
+        public List<User> GetThatUsersByDepartmentId(int departmentid)
+        {
+            using (var context = new ArelAppAutomationContext())
+            {
+                return context.Users
+                     .Include(i => i.UserDepartments)
+                     .ThenInclude(i => i.Department)
+                     .Where(i => i.UserDepartments.Select(i => i.DepartmentId).Contains(departmentid)).ToList();
+
+            }
+            
+            
+        }
+
+        public User GetThatStudentsAcademicians(int id)
+        {
+            using (var context = new ArelAppAutomationContext())
+            {
+                return context.Users
+                   .Where(i => i.Id == id)
+                   .Include(i => i.UserLectures)
+                   .ThenInclude(i => i.Lecture)
+                   .FirstOrDefault();
+            }
+        }
 
 
     }

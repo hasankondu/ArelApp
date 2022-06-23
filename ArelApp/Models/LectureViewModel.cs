@@ -1,4 +1,5 @@
 ﻿using ArelApp.Entities.Concrete;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
 namespace ArelApp.UI.Models
@@ -12,7 +13,12 @@ namespace ArelApp.UI.Models
 
         public List<Lecture> Lectures { get; set; }
         public List<Department> Departments { get; set; }
+        public List<User> Users { get; set; }
         public int DepartmentId { get; set; }
+        public User SelectedAcademician { get; set; }
+        public int UserId { get; set; }
+        public IEnumerable<SelectListItem> LecturesDepartment { get; set; }
+        public IEnumerable<SelectListItem> LecturesAcademician { get; set; }
 
 
     }

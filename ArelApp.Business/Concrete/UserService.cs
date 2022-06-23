@@ -143,5 +143,38 @@ namespace ArelApp.Business.Concrete
         {
             return _userDal.GetThatAcademiciansStudents(id);
         }
+
+
+        public void AssignUserToLecture(User entity, int LectureId, EnumApprovalStatus approvalStatus)
+        {
+            _userDal.AssignUserToLecture(entity, LectureId, approvalStatus);
+        }
+
+        public void ReAssignAcademicianToLecture(User oldacademician, int academicianid, int LectureId, EnumApprovalStatus approvalStatus)
+        {
+            _userDal.ReAssignAcademicianToLecture(oldacademician, academicianid, LectureId, approvalStatus);
+        }
+        public List<User> GetThatUsersByDepartmentId(int departmentid)
+        {
+            return _userDal.GetThatUsersByDepartmentId(departmentid);
+            
+        }
+
+        public Task<bool> IsInRoleAsync(User user, string role)
+        {
+            return _userService.IsInRoleAsync(user, role);
+        }
+
+        public User GetThatStudentsAcademicians(int id)
+        {
+            return _userDal.GetThatStudentsAcademicians(id);
+
+           
+        }
+
+        public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string newPassword)
+        {
+            return await _userService.ResetPasswordAsync(user, token, newPassword);
+        }
     }
 }

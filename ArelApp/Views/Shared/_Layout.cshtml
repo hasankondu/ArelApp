@@ -66,19 +66,19 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 {
                                     <li class="treeview">
                                         <a href="#">
-                                            <i class="fa fa-laptop"></i>
+                                            <i class="fa fa-bookmark-o"></i>
                                             <span>Rol İşlemleri</span>
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </a>
                                         <ul class="treeview-menu">
                                             <li>
                                                 <a asp-controller="Role" asp-action="Add">
-                                                    <i class="fa fa-dashboard"></i> <span>Rol Ekle</span>
+                                                    <i class="fa fa-plus"></i> <span>Rol Ekle</span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a asp-controller="Role" asp-action="List">
-                                                    <i class="fa fa-dashboard"></i> <span>Rol Listele</span>
+                                                    <i class="fa fa-unsorted"></i> <span>Rol Listele</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -88,19 +88,19 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 {
                                     <li class="treeview">
                                         <a href="#">
-                                            <i class="fa fa-laptop"></i>
+                                            <i class="fa fa-users"></i>
                                             <span>Kullanıcı İşlemleri</span>
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </a>
                                         <ul class="treeview-menu">
                                             <li>
                                                 <a asp-controller="User" asp-action="Add">
-                                                    <i class="fa fa-dashboard"></i> <span>Kullanıcı Ekle</span>
+                                                    <i class="fa fa-plus"></i> <span>Kullanıcı Ekle</span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a asp-controller="User" asp-action="List">
-                                                    <i class="fa fa-dashboard"></i> <span>Kullanıcı Listele</span>
+                                                    <i class="fa fa-unsorted"></i> <span>Kullanıcı Listele</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -108,7 +108,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 }
                                 <li class="treeview">
                                     <a href="#">
-                                        <i class="fa fa-laptop"></i>
+                                        <i class="fa fa-file-text"></i>
                                         <span>Ders İşlemleri</span>
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </a>
@@ -117,12 +117,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         {
                                             <li>
                                                 <a asp-controller="Lecture" asp-action="Add">
-                                                    <i class="fa fa-dashboard"></i> <span>Ders Ekle</span>
+                                                    <i class="fa fa-plus"></i> <span>Ders Ekle</span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a asp-controller="Lecture" asp-action="List">
-                                                    <i class="fa fa-dashboard"></i> <span>Ders Listele</span>
+                                                    <i class="fa fa-unsorted"></i> <span>Ders Listele</span>
                                                 </a>
                                             </li>
                                         }
@@ -130,7 +130,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         {
                                             <li>
                                                 <a asp-controller="Lecture" asp-action="Choose">
-                                                    <i class="fa fa-dashboard"></i> <span>Ders Seçimi</span>
+                                                    <i class="fa fa-sitemap"></i> <span>Ders Seçimi</span>
                                                 </a>
                                             </li>
                                         }
@@ -138,48 +138,51 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         {
                                             <li>
                                                 <a asp-controller="Lecture" asp-action="Approve">
-                                                    <i class="fa fa-dashboard"></i> <span>Ders Onayı</span>
+                                                    <i class="fa fa-thumbs-up"></i> <span>Ders Onayı</span>
                                                 </a>
                                             </li>
                                         }
-                                        @if (User.IsInRole("Student") || User.IsInRole("Academician"))
+                                        @if (User.IsInRole("Student"))
                                         {
                                             <li>
                                                 <a asp-controller="Lecture" asp-action="MyLectures">
-                                                    <i class="fa fa-dashboard"></i> <span>Derslerim</span>
+                                                    <i class="fa fa-star"></i> <span>Öğrenimlerim</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if ( User.IsInRole("Academician"))
+                                        {
+                                            <li>
+                                                <a asp-controller="Lecture" asp-action="MyTeachings">
+                                                    <i class="fa fa-star"></i> <span>Öğretilerim</span>
                                                 </a>
                                             </li>
                                         }
                                     </ul>
                                 </li>
-                                @if (User.Identity.IsAuthenticated)
+                                @if (User.IsInRole("Academician")||User.IsInRole("Student"))
                                 {
                                     <li class="treeview">
                                         <a href="#">
-                                            <i class="fa fa-laptop"></i>
+                                            <i class="fa fa-thumb-tack"></i>
                                             <span>Sınav Notları</span>
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </a>
                                         <ul class="treeview-menu">
-                                           
+
+                                            @if (User.IsInRole("Academician"))
+                                            {
                                                 <li>
-                                                    <a asp-controller="Exam" asp-action="Add">
-                                                        <i class="fa fa-dashboard"></i> <span>Sınav Ekle</span>
+                                                    <a asp-controller="Exam" asp-action="Grade">
+                                                        <i class="fa fa-spinner"></i> <span>Sınav Notla</span>
                                                     </a>
                                                 </li>
-                                            
-                                            
-                                                <li>
-                                                    <a asp-controller="Exam" asp-action="List">
-                                                        <i class="fa fa-dashboard"></i> <span>Sınav Notları</span>
-                                                    </a>
-                                                </li>
-                                            
+                                            }
                                             @if (User.IsInRole("Student"))
                                             {
                                                 <li>
                                                     <a asp-controller="Exam" asp-action="Result">
-                                                        <i class="fa fa-dashboard"></i> <span>Sınav Sonuçlarım</span>
+                                                        <i class="fa fa-spinner"></i> <span>Sınav Sonuçlarım</span>
                                                     </a>
                                                 </li>
                                             }
@@ -190,19 +193,19 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     {
                                         <li class="treeview">
                                             <a href="#">
-                                                <i class="fa fa-laptop"></i>
+                                                <i class="fa fa-comments"></i>
                                                 <span>Bölüm İşlemleri</span>
                                                 <i class="fa fa-angle-left pull-right"></i>
                                             </a>
                                             <ul class="treeview-menu">
                                                 <li>
                                                     <a asp-controller="Department" asp-action="Add">
-                                                        <i class="fa fa-dashboard"></i> <span>Bölüm Ekle</span>
+                                                        <i class="fa fa-plus"></i> <span>Bölüm Ekle</span>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a asp-controller="Department" asp-action="List">
-                                                        <i class="fa fa-dashboard"></i> <span>Bölüm Listele</span>
+                                                        <i class="fa fa-unsorted"></i> <span>Bölüm Listele</span>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -212,7 +215,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     {
                                         <li class="treeview">
                                             <a href="#">
-                                                <i class="fa fa-laptop"></i>
+                                                <i class="fa fa-calendar"></i>
                                                 <span>Randevu İşlemleri</span>
                                                 <i class="fa fa-angle-left pull-right"></i>
                                             </a>
@@ -222,23 +225,41 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                                 {
                                                     <li>
                                                         <a asp-controller="Appointment" asp-action="Add">
-                                                            <i class="fa fa-dashboard"></i> <span>Randevu Ekle</span>
+                                                            <i class="fa fa-plus"></i> <span>Randevu Ekle</span>
                                                         </a>
                                                     </li>
                                                 }
-                                                @if (User.IsInRole("Academician") || User.IsInRole("Student"))
+
+                                                @if (User.IsInRole("Student"))
                                                 {
                                                     <li>
-                                                        <a asp-controller="Appointment" asp-action="List">
-                                                            <i class="fa fa-dashboard"></i> <span>Randevu Listele</span>
+                                                        <a asp-controller="Appointment" asp-action="Book">
+                                                            <i class="fa fa-plus"></i> <span>Randevu Al</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                                @if (User.IsInRole("Academician"))
+                                                {
+                                                    <li>
+                                                        <a asp-controller="Appointment" asp-action="Approve">
+                                                            <i class="fa fa-thumbs-up"></i> <span>Randevu Onayı</span>
+                                                        </a>
+                                                    </li>
+                                                }
+
+                                                @if (User.IsInRole("Academician"))
+                                                {
+                                                    <li>
+                                                        <a asp-controller="Appointment" asp-action="MyMeetings">
+                                                            <i class="fa fa-bell"></i> <span>Görüşmelerim</span>
                                                         </a>
                                                     </li>
                                                 }
                                                 @if (User.IsInRole("Student"))
                                                 {
                                                     <li>
-                                                        <a asp-controller="Appointment" asp-action="Book">
-                                                            <i class="fa fa-dashboard"></i> <span>Randevu Al</span>
+                                                        <a asp-controller="Appointment" asp-action="MyAppointments">
+                                                            <i class="fa fa-bell"></i> <span>Randevularım</span>
                                                         </a>
                                                     </li>
                                                 }
@@ -264,7 +285,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                     <!--toggle button end-->
                     <div class="profile_details_left">
                         <!--notifications of menu start -->
-                        <ul class="nofitications-dropdown">
+                        @*<ul class="nofitications-dropdown">
                             <li class="dropdown head-dpdn">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">4</span></a>
                                 <ul class="dropdown-menu">
@@ -414,7 +435,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     </li>
                                 </ul>
                             </li>
-                        </ul>
+                        </ul>*@
                         <div class="clearfix"> </div>
                     </div>
                     <!--notification menu end -->
@@ -424,7 +445,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 
 
                     <!--search-box-->
-                    <div class="search-box">
+                    <!--<div class="search-box">
                         <form class="input">
                             <input class="sb-search-input input__field--madoka" placeholder="Search..." type="search" id="input-31" />
                             <label class="input__label" for="input-31">
@@ -433,7 +454,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 </svg>
                             </label>
                         </form>
-                    </div><!--//end-search-box-->
+                    </div>-->
+                    <!--//end-search-box-->
 
 
                     <div class="profile_details">
@@ -451,10 +473,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu drp-mnu">
-                                    <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>
-                                    <li> <a href="#"><i class="fa fa-user"></i> My Account</a> </li>
-                                    <li> <a href="#"><i class="fa fa-suitcase"></i> Profile</a> </li>
-                                    <li> <a asp-controller="User" asp-action="Logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                                    @*<li> <a asp-controller="User" asp-action="Logout"><i class="fa fa-cog"></i> Ayarlar</a> </li>*@
+                                    <li> <a asp-controller="User" asp-action="Logout"><i class="fa fa-sign-out"></i> Çıkış Yap</a> </li>
                                 </ul>
                             </li>
                         </ul>

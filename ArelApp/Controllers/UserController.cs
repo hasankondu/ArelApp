@@ -71,6 +71,7 @@ namespace ArelAppAutomation.Controllers
                 var departmentslectures = new List<Lecture>();
                 foreach (var item in DepartmentIds)
                 {
+                    
                      departmentslectures.AddRange(_departmentService.GetThatDepartmentsLectures(item).Lectures.ToList());
                     
                  
@@ -78,7 +79,14 @@ namespace ArelAppAutomation.Controllers
                 departmentslectures.Count();
 
                 var LectureIds = (departmentslectures.Select(i => i.Id).ToList());
-                _userService.UpdateUserLectures(user, LectureIds.ToArray(), EnumApprovalStatus.NotSubmitted);
+
+                if (LectureIds.Count!=0)
+                {
+                    _userService.UpdateUserLectures(user, LectureIds.ToArray(), EnumApprovalStatus.NotSubmitted);
+                }
+                   
+            
+                
 
 
                 return RedirectToAction("List");
@@ -95,12 +103,9 @@ namespace ArelAppAutomation.Controllers
 
             var user = await _userService.FindByIdAsync(UserId);
 
-
-            //var user = _userService.ListUserDepartments(departmentId);
             var model = new UserViewModel()
             {
                 Users = _userService.List(),
-                //RoleNames = await _userService.UsersRoles(user)
             };
             return View(model);
         }
@@ -162,7 +167,10 @@ namespace ArelAppAutomation.Controllers
                 var roles = await _userService.GetRolesAsync(entity);
 
                 await _userService.UpdateAsync(entity);
-                await _userService.ChangePassword(entity, model.Password, model.NewPassword);
+
+                var token = await _userService.GeneratePasswordResetTokenAsync(entity);
+                 await _userService.ResetPasswordAsync(entity, token, model.NewPassword);
+                //await _userService.ChangePassword(entity, model.Password, model.NewPassword);
                 await _userService.RemoveFromRolesAsync(entity, roles);
                 foreach (var item in RoleIds)
                 {
@@ -173,7 +181,7 @@ namespace ArelAppAutomation.Controllers
                         
                     }
                 }
-                //await _userService.
+                
                 _userService.UpdateUserDepartments(entity,DepartmentIds);
                 
                 return RedirectToAction("List");

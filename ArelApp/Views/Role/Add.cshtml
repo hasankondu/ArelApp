@@ -3,20 +3,22 @@
     ViewData["Title"] = "Add";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="widget-shadow " data-example-id="basic-forms">
-    <div class="form-title">
-        <h4>Role Ekle</h4>
-    </div>
-    <div class="form-body">
-        <form class="form-horizontal" asp-controller="Role" asp-action="Add">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Role Adı:</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" placeholder="Role Adı" name="Name">
+<div class="container">
+    <div class="widget-shadow " data-example-id="basic-forms">
+        <div class="form-title">
+            <h4>Rol Ekle</h4>
+        </div>
+        <div class="form-body">
+            <form class="form-horizontal" asp-controller="Role" asp-action="Add">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Rol Adı:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="Rol Adı" name="Name">
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-offset-2"> <button type="submit" class="btn btn-default">Ekle</button> </div>
-        </form>
+                <div class="col-sm-offset-2"> <button type="submit" class="btn btn-success btn-flat btn-pri" style="margin-left:300px;"><i class="fa fa-plus" aria-hidden="true"></i>Ekle</button> </div>
+              
+            </form>
+        </div>
     </div>
 </div>

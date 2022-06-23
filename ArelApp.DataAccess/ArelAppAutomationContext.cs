@@ -23,6 +23,7 @@ namespace ArelApp.DataAccess
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Exam> Exams { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

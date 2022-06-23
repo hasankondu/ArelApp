@@ -1,0 +1,45 @@
+﻿@model ChoiceViewModel
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    @foreach (var item in Model.LectureswithDepartment)
+    {
+        @if (item.Lectures.Count() != 0)
+        {
+
+
+            <div class="tables">
+                <div class="bs-example widget-shadow" data-example-id="hoverable-table">
+                    <h4>@item.DepartmentName Öğretilerim</h4>
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ders Adı</th>
+                                <th>Ders Kodu</th>
+                                <th>Kredi</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var lecture in item.Lectures)
+                            {
+                                <tr>
+                                    <th scope="row">@lecture.Id</th>
+                                    <td>@lecture.Name</td>
+                                    <td>@lecture.Code</td>
+                                    <td>@lecture.Credit</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        }
+    }
+</div>

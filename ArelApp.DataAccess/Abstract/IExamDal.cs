@@ -12,5 +12,9 @@ namespace ArelApp.DataAccess.Abstract
     {
         List<Exam> List();
         Exam GetByStudentId(string studentId);
+        Exam GetByStudentIdandLectureId(string studentId, int lectureId);
+
+       
+
     }
 }

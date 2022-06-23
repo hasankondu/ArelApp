@@ -20,6 +20,7 @@ namespace ArelApp.Business.Concrete
             _examDal.Add(exam);
         }
 
+
         public void Delete(Exam exam)
         {
             _examDal.Delete(exam);
@@ -35,6 +36,11 @@ namespace ArelApp.Business.Concrete
             return _examDal.GetByStudentId(studentId);
         }
 
+        public Exam GetByStudentIdandLectureId(string studentId, int lectureId)
+        {
+            return _examDal.GetByStudentIdandLectureId(studentId, lectureId);
+        }
+
         public List<Exam> List()
         {
             return _examDal.List();
@@ -44,5 +50,6 @@ namespace ArelApp.Business.Concrete
         {
             _examDal.Update(exam);
         }
+
     }
 }

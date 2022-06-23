@@ -63,7 +63,8 @@ namespace ArelApp
             services.AddScoped<IUserDal, EfUserDal>();
             services.AddScoped<IExamService, ExamService>();
             services.AddScoped<IExamDal, EfExamDal>();
-
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IAppointmentDal, EfAppointmentDal>();
             services.AddControllersWithViews();
 
             //services.AddIdentity<User, Role>(config =>

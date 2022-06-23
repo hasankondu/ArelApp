@@ -19,6 +19,16 @@ namespace ArelApp.DataAccess.Concrete
                     .FirstOrDefault(i => i.StudentId == studentId);
             }
         }
+        public Exam GetByStudentIdandLectureId(string studentId,int lectureId)
+        {
+            using (var context = new ArelAppAutomationContext())
+            {
+                return context
+                    .Exams
+                    .Where(i=>i.LectureId==lectureId)
+                    .FirstOrDefault(i => i.StudentId == studentId);
+            }
+        }
 
         public List<Exam> List()
         {
@@ -29,5 +39,9 @@ namespace ArelApp.DataAccess.Concrete
                     .ToList();
             }
         }
+
+        
     }
+
+
 }

@@ -39,14 +39,34 @@ namespace ArelApp.Business.Concrete
             return _lectureDal.List();
         }
 
-        public Lecture GetByStudentId(string studentId)
-        {
-            return _lectureDal.GetByStudentId(studentId);
-        }
+        //public Lecture GetByStudentId(string studentId)
+        //{
+        //    return _lectureDal.GetByStudentId(studentId);
+        //}
 
         public List<Lecture> GetUsersLecturesByDepartment(Lecture lecture)
         {
             return _lectureDal.GetUsersLecturesByDepartment(lecture);
+        }
+
+        public Lecture GetThatLecturesAcademician(int lectureid)
+        {
+            return _lectureDal.GetThatLecturesAcademician(lectureid);
+        }
+
+        public Lecture GetThatLecturesStudents(int lectureid)
+        {
+            return _lectureDal.GetThatLecturesStudents(lectureid);
+        }
+
+        public void UpdateStudentExams(int LectureId, int[] StudentIds, int[] Midterms, int[] Finals)
+        {
+            _lectureDal.UpdateStudentExams(LectureId, StudentIds, Midterms, Finals);
+        }
+
+        public void CreateExam(int[] StudentIds, int LectureId)
+        {
+            _lectureDal.CreateExam(StudentIds, LectureId);
         }
     }
 }

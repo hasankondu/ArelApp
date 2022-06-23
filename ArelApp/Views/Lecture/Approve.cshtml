@@ -5,80 +5,81 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form action="" method="post">
-    <h4>Ders Onayı</h4>
+<div class="container">
+
     @foreach (var item in Model.StudentswithLectures)
     {
-        if (item.StudentsLectures.Count != 0)
+
+        @if (item.StudentsLectures.Count != 0)
         {
-            <p> @item.DepartmentName</p>
-            foreach (var student in item.StudentsLectures)
+        <h4 style="font-size: 1.4em; margin-bottom: 1em; color: #777777; ">@item.DepartmentName Ders Onayı</h4>
+       
+            @foreach (var student in item.StudentsLectures)
             {
 
+                <form action="" method="post">
 
-                <div class="tables">
-                    <div class="bs-example widget-shadow" data-example-id="hoverable-table">
-                        <p>@student.StudentName</p>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Ders Adı</th>
-                                    <th>Ders Kodu</th>
-                                    <th>Kredi</th>
-                                    <th>Seç</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach (var lecture in student.Lectures)
-                                {
-
+                    <div class="tables">
+                        <div class="bs-example widget-shadow" data-example-id="hoverable-table">
+                            <h5 style="font-size: 1.4em; margin-bottom: 1em; color: #000C66; ">@student.StudentName</h5>
+                            <table class="table table-hover">
+                                <thead>
                                     <tr>
-
-                                        <th scope="row">@lecture.Id</th>
-                                        <td>@lecture.Name</td>
-                                        <td>@lecture.Code</td>
-                                        <td>@lecture.Credit</td>
-                                        <td>
-
-                                            <div class="checkbox-inline1">
-
-                                                <input type="checkbox"
-                                                       name="LectureIds"
-                                                       value="@lecture.Id"
-                                                       id="lecture(@lecture.Id)">
-                                                <label for="lecture(@lecture.Id)">
-                                                </label>
-                                            </div>
-
-                                        </td>
+                                        <th>#</th>
+                                        <th>Ders Adı</th>
+                                        <th>Ders Kodu</th>
+                                        <th>Kredi</th>
+                                        <th>Seç</th>
                                     </tr>
-                                }
+                                </thead>
+                                <tbody>
 
-                            </tbody>
+                                    @foreach (var lecture in student.Lectures)
+                                    {
 
-                        </table>
+                                        <tr>
+
+                                            <th scope="row">@lecture.Id</th>
+                                            <td>@lecture.Name</td>
+                                            <td>@lecture.Code</td>
+                                            <td>@lecture.Credit</td>
+                                            <td>
+
+                                                <div class="checkbox-inline1">
+
+                                                    <input type="checkbox"
+                                                           name="LectureIds"
+                                                           value="@lecture.Id"
+                                                           id="lecture(@lecture.Id)">
+                                                    <label for="lecture(@lecture.Id)">
+                                                    </label>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
 
 
 
 
 
-                        <input type="hidden" name="StudentId" value="@student.StudentId" />
-                        <button type="submit" class="btn btn-danger btn-flat btn-pri" formaction="Approve"><i class="fa fa-plus" aria-hidden="true"></i>Onayla</button>
+                            <input type="hidden" name="StudentId" value="@student.StudentId" />
+                            <button type="submit" class="btn btn-success btn-flat btn-pri" formaction="Approve" style="display: inline-block; margin-left:825px;"><i class="fa fa-thumbs-up" aria-hidden="true"></i>Onayla</button>
+
+                            <input type="hidden" name="StudentId" value="@student.StudentId" />
+                            <button type="submit" class="btn btn-danger btn-flat btn-pri" formaction="Deny" style="display: inline-block"><i class="fa fa-thumbs-down" aria-hidden="true"></i>Reddet</button>
 
 
 
-
-                        @*<form action="/Lecture/Deny" method="post">
-                                <input type="hidden" name="StudentId" value="@student.StudentId" />
-                                <button type="submit" class="btn btn-danger btn-flat btn-pri"><i class="fa fa-plus" aria-hidden="true"></i>Reddet</button>
-
-                            </form>*@
+                        </div>
                     </div>
-                </div>
-
+                </form>
             }
         }
+
     }
-</form>
+</div>

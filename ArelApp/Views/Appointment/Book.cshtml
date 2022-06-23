@@ -1,0 +1,104 @@
+﻿@model AppointmentViewModel
+@{
+    ViewData["Title"] = "Book";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+
+    <script src="~/ckeditor5-build-classic/ckeditor.js"></script>
+    <script type="text/javascript">
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+
+            })
+            
+            .then(editor => {
+                window.editor = editor;
+            })
+            
+            
+            .catch(err => {
+                console.error(err.stack);
+            });
+       
+    </script>
+ 
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+                $("#AcademicianList").change(function () {
+                    $("#AppointmentList").empty();
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("LoadAppointments")',
+
+                        dataType: 'json',
+                        data: { id: $("#AcademicianList").val() },
+                        success: function (appointments) {
+                            $("#AppointmentList").append('<option value="' + -1 + '">' +
+                                "Randevu Seç" + '</option>');
+                            $.each(appointments, function (i, appointment) {
+                                $("#AppointmentList").append('<option value="' + appointment.value + '">' +
+                                    appointment.text + '</option>');
+                            });
+                        },
+                        error: function (ex) {
+                            alert('Randevuları getirirken hata.' + ex);
+                        }
+                    });
+                    return false;
+                });
+
+            });
+
+    </script>
+}
+
+<div class="container">
+    <div class="widget-shadow " data-example-id="basic-forms">
+        <div class="form-title">
+            <h4>Randevu Al</h4>
+        </div>
+        <div class="form-body">
+            <form class="form-horizontal" asp-controller="Appointment" asp-action="Book" method="post">
+
+                <div class="form-group">
+                    <label asp-for="Subject" class="col-sm-2 control-label">Ders Adı:</label>
+                    <div class="col-sm-9">
+                        <input asp-for="Subject" value="@Model.Subject" type="text" class="form-control" placeholder="Konu" name="Subject">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Ders Kodu:</label>
+                    <div class="col-sm-9">
+
+                        <textarea asp-for="Comment" id="editor" placeholder="Randevu sebebiniz" class="form-control">@Model.Comment</textarea>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="selector1" class="col-sm-2 control-label">Akademisyen</label>
+                    <div class="col-sm-9">
+                        <select asp-for="AcademicianId" id="AcademicianList" asp-items="ViewBag.Academicians" class="form-control1">
+                            <option>Akademisyen Seç</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="selector1" class="col-sm-2 control-label">Akademisyen</label>
+                    <div class="col-sm-9">
+                        <select asp-for="AppointmentId" id="AppointmentList" asp-items="ViewBag.Appointments" class="form-control1">
+                            <option>Randevu Seç</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-offset-2"> <button type="submit" class="btn btn-success btn-flat btn-pri" style="margin-left:300px;"><i class="fa fa-plus" aria-hidden="true"></i>Randevu Al</button> </div>
+            </form>
+        </div>
+    </div>
+</div>

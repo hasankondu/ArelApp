@@ -11,5 +11,7 @@ namespace ArelApp.Business.Abstract
         List<Exam> List();
         Exam GetById(int id);
         Exam GetByStudentId(string studentId);
+        Exam GetByStudentIdandLectureId(string studentId, int lectureId);
+
     }
 }
